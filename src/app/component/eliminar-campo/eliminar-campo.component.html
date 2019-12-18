@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="col-12" *ngIf="cargando">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="flag===1 && !cargando">
+        Campo eliminado correctamente
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="flag===2 && !cargando">
+        Error al borrar campo
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let campo of campos">
+            {{campo.nombre}}
+            <button type="button" class="btn btn-danger" (click)="eliminar(campo)">Borrar</button>
+        </li>
+    </ul>
+</div>

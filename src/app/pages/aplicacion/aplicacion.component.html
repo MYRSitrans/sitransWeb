@@ -1,0 +1,41 @@
+<app-header></app-header>
+<h1 class="text-center">Modificar elementos de la aplicación</h1>
+<div class="container p-3">
+    <div class="row">
+        <div class="col-4 border">
+            <div class="input-group my-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Terminal</label>
+                </div>
+                <select [(ngModel)]="seleccion.terminal" class="custom-select" id="inputGroupSelect01" name="teminal" (ngModelChange)="onChange()">
+                    <option *ngFor="let t of terminales" [value]="t"> {{ t }} </option>
+                </select>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" [ngClass]="{'active': seleccion.seccion === 'lavado'}" (click)=" seleccion.seccion = 'lavado'; onChange()">Lavado</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [ngClass]="{'active': seleccion.seccion === 'reparacion'}" (click)=" seleccion.seccion='reparacion'; onChange()">Reparación</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [ngClass]="{'active': seleccion.seccion === 'registro'}" (click)="seleccion.seccion='registro'; onChange()">Usuarios</a>
+                </li>
+            </ul>
+            <app-sel-usuario (accionOut)="seleccion = $event" *ngIf="seleccion.seccion === 'registro'" [accion]="seleccion"></app-sel-usuario>
+            <app-sel-campo (accionOut)="seleccion = $event" *ngIf="seleccion.seccion === 'lavado' && flag" [accion]="seleccion"></app-sel-campo>
+            <app-sel-campo (accionOut)="seleccion = $event" *ngIf="seleccion.seccion === 'lavado' && !flag" [accion]="seleccion"></app-sel-campo>
+            <app-sel-campo (accionOut)="seleccion = $event" *ngIf="seleccion.seccion === 'reparacion' && flag" [accion]="seleccion"></app-sel-campo>
+            <app-sel-campo (accionOut)="seleccion = $event" *ngIf="seleccion.seccion === 'reparacion' && !flag" [accion]="seleccion"></app-sel-campo>
+        </div>
+        <div class="col-8">
+            <app-registro *ngIf="seleccion.accion ==='addUser'"></app-registro>
+            <app-editar-usuario *ngIf="seleccion.accion === 'editUser'"></app-editar-usuario>
+            <app-eliminar-usuario *ngIf="seleccion.accion === 'delUser'"></app-eliminar-usuario>
+            <app-agregar-campo *ngIf="seleccion.accion === 'add'" [seccion]='seleccion'></app-agregar-campo>
+            <app-editar-campo *ngIf="seleccion.accion === 'edit' && seleccion.flag" [accion]='seleccion'></app-editar-campo>
+            <app-editar-campo *ngIf="seleccion.accion === 'edit' && !seleccion.flag" [accion]='seleccion'></app-editar-campo>
+            <app-eliminar-campo *ngIf="seleccion.accion === 'delete'" [seccion]='seleccion'></app-eliminar-campo>
+        </div>
+    </div>
+</div>

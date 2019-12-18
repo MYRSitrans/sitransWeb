@@ -1,0 +1,17 @@
+<app-header></app-header>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-5">
+            <img src="https://storage.cloud.google.com/sitransfotos/Logo/sitrans.png?authuser=1&cloudshell=false" class="img-fluid" alt="sitrans">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <a [routerLink]="['/lavado']" class="btn btn-primary btn-lg btn-block">Lavados</a>
+            <a [routerLink]="['/reparacion','REFFER']" class="btn btn-primary btn-lg btn-block">Reparacion REEFER</a>
+            <a [routerLink]="['/reparacion','BOX']" class="btn btn-primary btn-lg btn-block">Reparacion BOX</a>
+            <a [routerLink]="['/buscar']" class="btn btn-info btn-lg btn-block">Fotos</a>
+            <a [routerLink]="['/aplicacion']" class="btn btn-secondary btn-lg btn-block" *ngIf="authService.admin">Aplicación</a>
+        </div>
+    </div>
+</div>

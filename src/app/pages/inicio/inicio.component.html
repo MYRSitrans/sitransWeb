@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row justify-content-center align-self-center ">
+        <div class="col-md-6 col-lg-4 p-3 mt-5 border">
+            <h1>Iniciar Sesión</h1>
+            <div class="alert alert-danger" role="alert" *ngIf="showAlert">
+                Usuario o contraseña incorrecto
+            </div>
+            <form (ngSubmit)="login( f )" #f="ngForm">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Dirección de correo</label>
+                    <input [(ngModel)]="usuario.email" name="email" type="email" class="form-control" id="exampleInputEmail1" required placeholder="Ingrese correo">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Contraseña</label>
+                    <input [(ngModel)]="usuario.password" name="password" type="password" required class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
+                </div>
+                <button type="submit" class="btn btn-primary text-center btn-block" [disabled]="cargando">
+                    <span *ngIf="!cargando">
+                        Ingresar
+                    </span>
+                    <span *ngIf="cargando">
+                        Cargando
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Cargando...</span>
+                        </div>
+                    </span>
+
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center align-self-center">
+        <div class="col-md-3 p-3">
+            <a href="https://storage.cloud.google.com/sitransfotos/Logo/app-debug.apk?authuser=1&cloudshell=false" class="btn btn-secondary">
+                Descargar Aplicación
+            </a>
+        </div>
+    </div>
+</div>

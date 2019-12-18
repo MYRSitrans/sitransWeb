@@ -1,0 +1,52 @@
+<div class="container border p-3">
+    <div class="col-12" *ngIf="cargando">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!cargando">
+        <div class="alert alert-success" role="alert" *ngIf="flag===1">
+            Usuario creado Correctamente
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="flag===2">
+            Ya existe un usuario con ese rut
+        </div>
+        <div class="alert alert-warning" role="alert" *ngIf="flag===3">
+            Todos los campos son obligatorios
+        </div>
+    </div>
+    <form (ngSubmit)="registro( fRegistro )" #fRegistro="ngForm" autocomplete="off" *ngIf="!cargando">
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" [(ngModel)]="usuario.nombre" name="nombre" class="form-control " required>
+        </div>
+        <div class="form-group">
+            <label>Rut(sin digito verificador)</label>
+            <input type="text" [(ngModel)]="usuario.rut" name="rut" class="form-control " required>
+        </div>
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" [(ngModel)]="usuario.password" name="password" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Terminal</label>
+            <select class="form-control" [(ngModel)]="usuario.terminal" placeholder="Eliga una opcion" name="terminal"> 
+                <option selected disabled >Eliga una opcion</option>
+                <option *ngFor="let t of terminales" [value]="t"> {{t}} </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="form-check mb-2 mr-sm-2">
+                <input class="form-check-input" type="checkbox" id="inlineFormCheck" [checked]="usuario.webAccess" (change)="usuario.webAccess=!usuario.webAccess">
+                <label class="form-check-label" for="inlineFormCheck">
+                    Acceso a la página Web
+                </label>
+            </div>
+        </div>
+        <div class="align-self-end">
+            <button type="submit" class="btn btn-success"> Registrar </button>
+        </div>
+    </form>
+</div>

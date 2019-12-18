@@ -1,0 +1,68 @@
+<app-header></app-header>
+<div class="container p-5">
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <ng-container *ngFor="let n of nombres; let i = index">
+                    <li class="breadcrumb-item" *ngIf="i!==nombres.length-1">
+                        <a (click)="navegar(i)"> {{n.toUpperCase()}} </a>
+                    </li>
+                    <li class="breadcrumb-item active" *ngIf="i === nombres.length-1">
+                        {{n.toUpperCase()}}
+                    </li>
+                </ng-container>
+            </ol>
+        </nav>
+        <div class="col-5 ml-auto">
+            <div class="input-group mb-3">
+                <input [(ngModel)]="buscado" (ngModelChange)="buscar()" type="text" class="form-control" placeholder="Buscar" *ngIf="navegation.length < 4">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="navegation.length < 4">
+    <div class="alert alert-primary" role="alert" *ngIf="data.length === 0 && !cargando">
+        No existe resultados....
+    </div>
+    <div class="col-12" *ngIf="cargando">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered" *ngIf="data.length > 0 && !cargando">
+        <thead>
+            <tr>
+                <th class=" text-capitalize " scope="col">{{nombres[nombres.length-1].toUpperCase()}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let d of data">
+                <td>
+                    <button type="button" class="btn btn-link" (click)="click(d)">
+                        {{d.toUpperCase()}}
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container" *ngIf="navegation.length >= 4">
+    <div class="alert alert-primary" role="alert" *ngIf="data.length === 0 && !cargando">
+        No existe resultados....
+    </div>
+    <div class="col-12" *ngIf="cargando">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="!cargando">
+        <div class="col-md-4  pb-5" *ngFor="let d of data">
+            <img [src]="d" class="card-img-top mb-4">
+            <a [href]="d" class="btn stretched-link btn-success-danger btn-block" target="_blank"></a>
+        </div>
+    </div>
+</div>

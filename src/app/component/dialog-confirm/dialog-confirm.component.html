@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{mensaje}}</h1>
+<div mat-dialog-content>
+    <p class="font-weight-bold text-danger">Esta accion es permanetnte</p>
+    <hr>
+    <p>Ingrese {{texto}} para confirmar</p>
+    <input class="form-control" type="text" [(ngModel)]="codigo" name="codigo" autocomplete="off">
+</div>
+<div mat-dialog-actions>
+    <button class="btn btn-secondary" (click)="onClick()"> No </button>
+    <button class="btn btn-danger ml-auto" [mat-dialog-close]="true" [disabled]="codigo !== texto"> Si </button>
+</div>

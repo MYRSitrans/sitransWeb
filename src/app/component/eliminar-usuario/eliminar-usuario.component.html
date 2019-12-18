@@ -1,0 +1,35 @@
+<div class="container border p-3">
+    <div class="col-12" *ngIf="cargando">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!cargando">
+        <div class="alert alert-success" role="alert" *ngIf="flag===1">
+            Usuario eliminado Correctamente
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="flag===2">
+            Error al eliminar usuario
+        </div>
+    </div>
+    <form (ngSubmit)="eliminarUsuario( fEditar )" #fEditar="ngForm" *ngIf="!cargando">
+        <div class="form-group border p-3">
+            <label for="Input1">Rut </label>
+            <select class="form-control" [(ngModel)]="rut" (ngModelChange)="cambiar()" placeholder="Eliga una opcion" name="rut"> 
+                    <option selected disabled >Eliga una opcion</option>
+                    <option *ngFor="let u of usuarios" [value]="u.rut" > {{u.rut}} </option>
+                </select>
+        </div>
+        <div class="form-group" *ngIf="rut">
+            <p><b>Nombre:</b> {{nombre}}</p>
+        </div>
+        <div class="form-group" *ngIf="rut">
+            <p><b>Terminal:</b> {{terminal}}</p>
+        </div>
+        <div *ngIf="rut">
+            <button type="submit" class="btn btn-danger"> Eliminar Usuario </button>
+        </div>
+    </form>
+</div>

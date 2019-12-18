@@ -1,0 +1,68 @@
+<app-header></app-header>
+<div class="container-fluid p-2">
+    <form class="p-3">
+        <div class="d-flex row">
+            <div class="mx-auto align-bottom">
+                <label> Fecha minima</label>
+                <input type="date" class="form-control" name="fechaMin" [(ngModel)]="fechaMin" (ngModelChange)="filtrarFecha()">
+            </div>
+            <div class="mx-auto align-bottom">
+                <label>Fecha Maxima</label>
+                <input type="date" class="form-control" name="fechaMax" [(ngModel)]="fechaMax" (ngModelChange)="filtrarFecha()">
+            </div>
+            <div class="mx-auto align-bottom">
+                <button class="btn btn-outline-secondary" (click)='copiar()'> Copiar</button>
+            </div>
+            <div class="mx-auto align-bottom" *ngIf="authService.admin">
+                <button class="btn btn-outline-danger" (click)='borrar()'> Borrar</button>
+            </div>
+            <div class="mx-auto align-bottom" *ngIf="authService.admin">
+                <label>Terminal</label>
+                <select [(ngModel)]="terminal" class="custom-select" name="teminal" (ngModelChange)="ngOnInit()">
+                    <option *ngFor="let t of terminales" [value]="t"> {{ t }} </option>
+                </select>
+            </div>
+        </div>
+    </form>
+    <div class="col-12" *ngIf="cargando">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-primary" role="alert" *ngIf="reparaciones.length === 0 && !cargando">
+        No existe resultados....
+    </div>
+    <table class="table table-bordered" id="tabla1" *ngIf="reparaciones.length > 0">
+        <thead>
+            <tr>
+                <th *ngIf="authService.admin">
+                    <div class="form-check">
+                        <input class="form-check-input position-static" type="checkbox" aria-label="..." [(ngModel)]="checkAll" (click)="cambio()">
+                    </div>
+                </th>
+                <th *ngFor="let campo of campos" class="text-capitalize">{{campo}}</th>
+                <th class="text-capitalize">Digitador</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let lavado of reparaciones; let i = index">
+                <th *ngIf="authService.admin">
+                    <div class="form-check">
+                        <input class="form-check-input position-static" type="checkbox" [(ngModel)]="checkBox[i]" aria-label="...">
+                    </div>
+                </th>
+                <th>{{lavado.created | date: 'y-MM-dd'}}</th>
+                <th>{{lavado.created | date: 'HH:mm'}}</th>
+                <th>{{lavado.contenedor.toUpperCase()}}</th>
+                <th *ngFor="let campo of campos.slice(3,campos.length)">
+                    <ng-container *ngFor="let l of lavado.campos">
+                        <div *ngIf="l.nombre === campo"> {{ l.valor }} </div>
+                    </ng-container>
+                </th>
+                <th class="text-capitalize">{{lavado.usuario.nombre}}</th>
+            </tr>
+        </tbody>
+    </table>
+</div>
